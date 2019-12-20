@@ -12,7 +12,9 @@ public class VillesJdbc {
 		// 
 		//createVille();
 		//readVille();
-		updateVille(1, "AZAN");
+		//updateVille(1, "AZAN");
+		deleteVille(1);
+		readVille();
 		
 		
 	}
@@ -179,7 +181,53 @@ public class VillesJdbc {
 		
 	}
 	public static Boolean deleteVille(int id) {
+		// information de la base de donnee
 		
+				String url = "jdbc:mysql://localhost/villesjdbc";
+				String login = "root";
+				String password = "";
+				Connection cn = null;
+				Statement st = null;
+				
+				try {
+					// etape1 chargement du driver
+					
+					Class.forName("com.mysql.jdbc.Driver");
+					
+					// etape2 recupertion de la connnexion
+					
+					cn = DriverManager.getConnection(url, login, password);
+					
+					// etape 3 creation du statement
+					st = cn.createStatement();
+					String sql = "delete from   villes_france_free where ville_id = "+id;
+					//String sql = "Insert into `javadb` (`personne`) values ('"+ personne +"')";
+					//etape 4 executer la requette
+					System.out.println("suppression");
+					int rs=st.executeUpdate(sql);		
+					System.out.println("resultat " + rs);
+					
+				
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+				}
+				catch (ClassNotFoundException e) {
+					
+					e.printStackTrace();
+				}
+				finally {
+					
+					// etape 5 liberer les ressources
+					try {
+						cn.close();
+						st.close();
+					} catch (SQLException e) {
+						
+						e.printStackTrace();
+					}
+				}
+				
 		return true;
 		
 	}
